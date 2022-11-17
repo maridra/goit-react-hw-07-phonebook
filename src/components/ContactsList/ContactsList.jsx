@@ -1,27 +1,13 @@
-import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectFilterValue, selectContacts } from 'redux/selectors';
+import { selectVisibleContacts } from 'redux/selectors';
 import { deleteContact } from 'redux/contactsOperations';
 
 import css from './ContactsList.module.css';
 
 export default function ContactsList() {
-  const contacts = useSelector(selectContacts);
-  const filterValue = useSelector(selectFilterValue);
+  const visibleContacts = useSelector(selectVisibleContacts);
   const dispatch = useDispatch();
-
-  const normalizedFilterValue = filterValue.toLowerCase();
-
-  const visibleContacts = useMemo(
-    () =>
-      contacts
-        ? contacts.filter(contact => {
-            return contact.name.toLowerCase().includes(normalizedFilterValue);
-          })
-        : [],
-    [contacts, normalizedFilterValue]
-  );
 
   return (
     <ol className={css.list}>
